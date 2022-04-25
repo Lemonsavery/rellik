@@ -19,7 +19,8 @@ export default {
   ],
   optimize: {
     /* Example: Bundle your final build: */
-    // "bundle": true,
+    // "bundle": true, // TODO: Currently breaks stuff.
+    "minify": true,
   },
   packageOptions: {
     /* ... */
