@@ -1,0 +1,23 @@
+.recipeOptions {
+    border: black double 0.2em;
+    border-radius: 0.7em;
+    padding: 0.3em 0.7em;
+    background-color: hsl(0deg 0% 100% / 50%);
+    width: -webkit-fill-available;
+    width: -moz-available;
+}
+.recipeOptions input[type=range] {
+    accent-color: black;
+}
+
+.recipeDiv {
+    display: flex;
+    overflow-x: auto;
+    overflow-y: hidden;
+}
+.recipeDiv:not(:hover)::-webkit-scrollbar { 
+    display: none; /* Safari and Chrome */
+}
+.recipeDiv:not(:hover) {
+    scrollbar-width: none; /* Firefox */
+}

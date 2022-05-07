@@ -29,3 +29,20 @@ button:active {
     filter: brightness(0.7);
 }
 
+
+/* @media screen and (min-width: 1200px) { */
+    ::-webkit-scrollbar {
+        border-radius: 9999px;
+    }
+    ::-webkit-scrollbar-track {
+        background: hsl(0deg 0% 0% / 20%);
+        border-radius: 9999px;
+    }
+    ::-webkit-scrollbar-thumb {
+        background: hsl(0deg 0% 0% / 40%);
+        border-radius: 9999px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+        background: hsl(0deg 0% 0% / 60%);
+    } 
+/* } */

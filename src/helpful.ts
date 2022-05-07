@@ -3,3 +3,6 @@ export function wrapInDiv(element: Element) {
     div.append(element);
     return div;
 }
+
+var nextUniqueId: number = 0;
+export function newUniqueId() { return (++nextUniqueId).toString(); }

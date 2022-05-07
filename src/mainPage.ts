@@ -1,5 +1,10 @@
 import styles from "./mainPage.module.css";
 import musicVolumeSlider from "./music";
+import quickPlayModal from "./modals/quickPlayModal";
+import campaignModal from "./modals/campaignModal";
+import customPlayModal from "./modals/customPlayModal";
+import gameThemesModal from "./modals/gameThemesModal";
+import settingsModal from "./modals/settingsModal";
 import { wrapInDiv } from "./helpful"; // TODO: Maybe define that especially for this file, not as a global helper.
 
 
@@ -27,6 +32,7 @@ let quickPlayButton: HTMLButtonElement = (() => {
     let button: HTMLButtonElement = document.createElement("button");
     button.innerText = "Quick Play";
     button.className = styles.button;
+    button.onclick = () => quickPlayModal.open();
     return button;
 })();
 
@@ -35,6 +41,7 @@ let campaignButton: HTMLButtonElement = (() => {
     let button: HTMLButtonElement = document.createElement("button");
     button.innerText = "Campaign";
     button.className = styles.button;
+    button.onclick = () => campaignModal.open();
     return button;
 })();
 
@@ -43,6 +50,7 @@ let customPlayButton: HTMLButtonElement = (() => {
     let button: HTMLButtonElement = document.createElement("button");
     button.innerText = "Custom Play";
     button.className = styles.button;
+    button.onclick = () => customPlayModal.open();
     return button;
 })();
 
@@ -51,6 +59,7 @@ let gameThemesButton: HTMLButtonElement = (() => {
     let button: HTMLButtonElement = document.createElement("button");
     button.innerText = "Game Themes";
     button.className = styles.button;
+    button.onclick = () => gameThemesModal.open();
     return button;
 })();
 
@@ -67,6 +76,7 @@ let gearButton: HTMLButtonElement = (() => {
         "position": "absolute",
     });
     button.className = `${styles.gearButton} ${styles.button}`;
+    button.onclick = () => settingsModal.open();
     return button;
 })();
 
