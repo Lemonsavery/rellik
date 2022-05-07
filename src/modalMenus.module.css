@@ -1,0 +1,43 @@
+.menu {
+    background: linear-gradient(hsl(0deg 0% 100% / 65%), hsl(0deg 0% 100% / 65%)),
+        url(https://bavotasan.com/wp-content/uploads/2009/09/orange.jpg);
+    border-radius: 5vmin;
+    --borderColor: hsl(44deg 100% 70%);
+    border: double var(--borderColor) 0.5vmin;
+    font-size: max(20px, 3vmin);
+    overflow: visible;
+}
+
+.menu::backdrop {
+    background: hsl(0deg 0% 0% / 30%);
+    pointer-events: none; /* Solves an issue on Firefox mobile. Clicking here would cause all text to be selected, and it was annoying. */
+}
+
+.closeButton {
+    position: absolute;
+    top: -4.5vmin;
+    right: -4.5vmin;
+    padding: max(20px, 5vmin);
+    border-radius: 50%;
+    background-image: url(https://cdn-icons-png.flaticon.com/512/1/1766.png);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 60%;
+    background-color: var(--borderColor);
+    border: hidden;
+    cursor: pointer;
+}
+
+.inner {
+    overflow-y: auto;
+    max-height: calc(100vh - 15vmin);
+    max-width: calc(100vw - 15vmin);
+}
+
+.inner input[type=checkbox] {
+    accent-color: black;
+    vertical-align: baseline;
+    --checkboxSize: max(1em, 2vmin);
+    height: var(--checkboxSize);
+    width: var(--checkboxSize);
+}
