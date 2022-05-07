@@ -1,0 +1,20 @@
+.button {
+    border-radius: 999vmin;
+    padding: 1vmin 5vmin;
+    border: solid black 0.07em;
+    background: linear-gradient(180deg, hsl(40deg 80% 75%), hsl(40deg 80% 50%));
+    margin-bottom: 0.3vmin;
+    cursor: pointer;
+    
+    font-size: 7vmin;
+    font-family: inherit;
+}
+
+/* Spin the gear button on hover. */
+.gearButton:hover,
+.gearButton:active {
+    -webkit-animation: spinGear 3s linear infinite;
+    animation: spinGear 3s linear infinite;
+}
+@-webkit-keyframes spinGear { from{-webkit-transform:rotate(0deg)} to{-webkit-transform:rotate(360deg)} }
+@keyframes spinGear { from{transform:rotate(0deg)} to{transform:rotate(360deg)} }
