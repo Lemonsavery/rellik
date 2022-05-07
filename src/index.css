@@ -1,0 +1,12 @@
+@font-face {
+    src: url("./Arneson-g3w6.ttf"); /* https://www.fontspace.com/arneson-font-f17967 */
+    font-family: arneson;
+}
+
+body {
+    margin: 0;
+    font-family: arneson;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    background-color: hsl(33deg 80% 50%);
+}
