@@ -12,6 +12,23 @@ export default {
         ...(process.versions.pnp ? { tsc: 'yarn pnpify tsc' } : {}),
       },
     ],
+    [
+      "snowpack-service-worker-assets",
+      {
+        patterns: ["**/*"],
+        worker: "rellikOffline.js",
+        replace: '"all-rellik-files"',
+      }
+    ],
+    // [
+    //   "@internetarchive/snowpack-files-hash",
+    //   {
+    //     // baseUrl: "../../my website/website/public/rellik",
+    //     baseUrl: "",
+    //     hashFiles: ["html", "js"],
+    //     searchImportsIn: ["html", "js"],
+    //   }
+    // ],
   ],
   routes: [
     /* Enable an SPA Fallback in development: */
@@ -29,6 +46,6 @@ export default {
     /* ... */
   },
   buildOptions: {
-    /* ... */
+    out: "../../my website/website/public/rellik",
   },
 };
