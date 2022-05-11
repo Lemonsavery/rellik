@@ -7,14 +7,14 @@ let music: HTMLAudioElement = (() => {
     element.volume = 0;
     element.src = "https://www.coolmathgames.com/sites/default/files/public_games/24804/media/audio/bgm.ogg"; // Taken from https://www.coolmathgames.com/0-puzzle-ball
     element.loop = true;
-
-    element.play();
-    window.addEventListener("blur", () => element.pause());
-    window.addEventListener("focus", () => element.play());
-    window.addEventListener("click", () => element.play());
-
     return element;
 })();
+const playMusic = () => {
+    if (music.volume) music.play();
+};
+window.addEventListener("blur", () => music.pause());
+window.addEventListener("focus", () => playMusic());
+window.addEventListener("click", () => playMusic());
 
 
 let musicVolumeInput: HTMLInputElement = (() => {
@@ -25,7 +25,7 @@ let musicVolumeInput: HTMLInputElement = (() => {
     input.oninput = () => music.volume = Number(input.value) / 100;
     input.onchange = () => {
         localStorage.setItem(MUSIC_VOLUME_STORAGE_KEY, music.volume.toString());
-        music.play();
+        playMusic();
     };
     input.oninput(new Event(""));
     return input;
