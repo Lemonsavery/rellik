@@ -104,6 +104,7 @@ class RecipeOptions {
                 "margin-bottom": "-2.5em",
                 "padding-bottom": "2.5em",
             });
+            element.className = styles.specialEffect_hideBackground;
         
             let lengthNumber: HTMLElement = document.createElement("span");
             Object.assign(lengthNumber.style, {"display": "inline-block", "width": "1em"});

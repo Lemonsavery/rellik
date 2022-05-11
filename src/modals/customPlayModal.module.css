@@ -21,3 +21,9 @@
 .recipeDiv:not(:hover) {
     scrollbar-width: none; /* Firefox */
 }
+
+@media screen and (max-width: 340px) {
+    .specialEffect_hideBackground {
+        background-size: 0 !important;
+    }
+}
