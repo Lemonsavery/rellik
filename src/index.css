@@ -50,3 +50,9 @@ button[disabled] {
         background: hsl(0deg 0% 0% / 60%);
     } 
 /* } */
+
+
+.widthFillAvailable {
+    width: -webkit-fill-available;
+    width: -moz-available;
+}
