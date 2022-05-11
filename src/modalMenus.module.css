@@ -16,7 +16,7 @@
 .closeButton {
     position: absolute;
     top: -4.5vmin;
-    right: -4.5vmin;
+    right: -4.5vmin; /* Another value is dependent on this one: closeButtonLeftSettingStyling */
     padding: max(20px, 5vmin);
     border-radius: 50%;
     background-image: url(https://cdn-icons-png.flaticon.com/512/1/1766.png);
