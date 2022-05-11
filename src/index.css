@@ -52,6 +52,14 @@ button[disabled] {
 /* } */
 
 
+.identityImg {
+    width: 1em;
+    aspect-ratio: 1;
+    background-repeat: no-repeat;
+    background-size: contain;
+}
+
+
 .widthFillAvailable {
     width: -webkit-fill-available;
     width: -moz-available;
