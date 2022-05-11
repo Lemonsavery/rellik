@@ -531,6 +531,7 @@ let bottomButtons: HTMLElement = (() => {
         Object.assign(button.style, butNotMainMenuStyle);
         Object.assign(button.style, {"margin-left": edgeMargin});
         button.innerText = "Play";
+        button.disabled = true;
         return button;
     })();
 
