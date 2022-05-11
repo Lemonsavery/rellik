@@ -240,6 +240,7 @@ class RecipeOptions {
         let recipeOptions: HTMLElement = (() => {
             let element: HTMLElement = document.createElement("div");
             element.className = styles.recipeOptions;
+            element.className += " widthFillAvailable";
             element.append(lengthAndFloatingOptions);
             element.append(identitiesOptions);
             return element;
