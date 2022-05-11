@@ -28,6 +28,10 @@ button {
 button:active {
     filter: brightness(0.7);
 }
+button[disabled] {
+    filter: opacity(0.5);
+    cursor: revert;
+}
 
 
 /* @media screen and (min-width: 1200px) { */
