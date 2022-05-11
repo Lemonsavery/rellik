@@ -14,6 +14,7 @@ class modalMenu {
 
         this.closeButton = document.createElement("button");
         this.closeButton.className = styles.closeButton;
+        this.closeButton.className += " closeButtonLeftSetting";
         this.closeButton.onclick = () => this.close();
         this.modal.append(this.closeButton);
 
