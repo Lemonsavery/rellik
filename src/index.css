@@ -15,7 +15,8 @@ html, body {
     overflow-x: hidden;
 } /* Fixes an issue where the whole page can scroll slightly, and it's annoying. */
 
-input[type=range] {
+input[type=range],
+input[type=radio] {
     cursor: pointer;
 }
 
