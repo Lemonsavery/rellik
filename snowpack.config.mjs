@@ -12,14 +12,14 @@ export default {
         ...(process.versions.pnp ? { tsc: 'yarn pnpify tsc' } : {}),
       },
     ],
-    [
-      "snowpack-service-worker-assets",
-      {
-        patterns: ["**/*"],
-        worker: "rellikOffline.js",
-        replace: '"all-rellik-files"',
-      }
-    ],
+    // [
+    //   "snowpack-service-worker-assets",
+    //   {
+    //     patterns: ["**/*"],
+    //     worker: "rellikOffline.js",
+    //     replace: '"all-rellik-files"',
+    //   }
+    // ],
     // [
     //   "@internetarchive/snowpack-files-hash",
     //   {
