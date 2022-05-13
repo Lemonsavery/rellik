@@ -1,8 +1,8 @@
 /** @type {import("snowpack").SnowpackUserConfig } */
 export default {
   mount: {
-    public: { url: '/', static: true },
-    src: { url: '/dist' },
+    public: { url: '/rellik', static: true },
+    src: { url: '/rellik/dist' },
   },
   plugins: [
     [
@@ -46,6 +46,7 @@ export default {
     /* ... */
   },
   buildOptions: {
-    out: "../../my website/website/public/rellik",
+    out: "../../my website/website/public",
+    clean: false, // This requires that just the /rellik folder is deleted before a build is ran, to ensure no straggler files exist.
   },
 };
