@@ -1,8 +1,14 @@
 /** @type {import("snowpack").SnowpackUserConfig } */
 export default {
   mount: {
-    public: { url: '/rellik', static: true },
-    src: { url: '/rellik/dist' },
+    public: {
+      // url: '/', // FOR DEV
+      url: '/rellik', // FOR BUILD
+      static: true },
+    src: {
+      // url: '/dist', // FOR DEV
+      url: '/rellik/dist', // FOR BUILD
+    },
   },
   plugins: [
     [

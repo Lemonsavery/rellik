@@ -47,11 +47,13 @@ let closeButtonSide: HTMLElement = (() => {
 let settingsModal = new modalMenu();
 settingsModal.inner.append(closeButtonSide);
 settingsModal.inner.append((() => document.createElement("br"))());
-settingsModal.inner.append("⚙️\n\nThis game is under extremely early development, so many assets are placeholders.");
+settingsModal.inner.append("⚙️\n\nThis game is under extremely early development, so many assets are stolen placeholders. \\_(ツ)_/");
+/* COMMENT OUT FOR BUILD
 settingsModal.inner.append((() => document.createElement("br"))());
 settingsModal.inner.append("🎨🌈🍁🍒📡🌊😈🧿️");
 settingsModal.inner.append((() => document.createElement("br"))());
 settingsModal.inner.append("\n\nhttps://red-pillows-doubt-66-190-62-67.loca.lt");
+/**/
 
 
 

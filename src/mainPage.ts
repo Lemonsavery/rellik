@@ -41,7 +41,7 @@ let campaignButton: HTMLButtonElement = (() => {
     let button: HTMLButtonElement = document.createElement("button");
     button.innerText = "Campaign";
     button.className = styles.button;
-    button.disabled = true;
+    button.style.display = "none"; // FOR BUILD ONLY
     button.onclick = () => campaignModal.open();
     return button;
 })();
