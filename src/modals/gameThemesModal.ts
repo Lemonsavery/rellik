@@ -1,11 +1,13 @@
 import modalMenu from "../modalMenus";
 import type Theme from "../themes/Theme";
 import { Themes, menuThemeOrder } from "../themes/Themes";
+import {generateIdentitySelector} from "./identityChoiceModal";
+import {identityChoiceButton} from "./customPlayModal";
 
 
 
 const THEME_CHOICE_STORAGE_KEY: string = "theme choice";
-let selectedThemeId: string = localStorage.getItem(THEME_CHOICE_STORAGE_KEY) ?? Themes[menuThemeOrder[0]].id;
+export let selectedThemeId: string = localStorage.getItem(THEME_CHOICE_STORAGE_KEY) ?? Themes[menuThemeOrder[0]].id;
 
 
 let themeOptions: HTMLElement = (() => {
@@ -51,6 +53,8 @@ let themeOptions: HTMLElement = (() => {
 
             button.onchange = () => {
                 selectedThemeId = theme.id;
+                generateIdentitySelector();
+                identityChoiceButton.dispatchEvent(new Event("identityChoicesModalUpdate"));
                 localStorage.setItem(THEME_CHOICE_STORAGE_KEY, selectedThemeId);
             };
             return button;
