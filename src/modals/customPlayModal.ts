@@ -2,7 +2,12 @@ import modalMenu from "../modalMenus";
 import styles from "./customPlayModal.module.css";
 import mainPageStyles from "../mainPage.module.css";
 import { newUniqueId } from "../helpful";
+import identityChoiceModal, {selectedIdentityIndexes} from "./identityChoiceModal";
 import itemsModal from "./itemsModal";
+
+import type Theme from "../themes/Theme";
+import Themes from "../themes/Themes";
+import {selectedThemeId} from "./gameThemesModal";
 
 
 
@@ -16,7 +21,7 @@ function rangeInputTickmarks(rangeInput: HTMLInputElement) {
     rangeInput.setAttribute("list", TICKMARKS_ID);
     let tickmarks: HTMLElement = document.createElement("datalist");
     tickmarks.id = TICKMARKS_ID;
-    for (let i: number = Number(rangeInput.min); i <= Number(rangeInput.max); i++) {
+    for (let i: number = Number(rangeInput.min); i <= Math.max(Number(rangeInput.max), NUM_THEME_IDENTITIES); i++) {
         let option: HTMLOptionElement = document.createElement("option");
         option.value = String(i);
         tickmarks.append(option);
@@ -31,7 +36,7 @@ interface SavedRecipe {
     minIdentities: number,
     maxIdentities: number,
 }
-class RecipeOptions {
+export class RecipeOptions {
     element: HTMLElement;
     inputs: {[key: string]: HTMLInputElement};
     onUpdate: Function;
@@ -134,7 +139,7 @@ class RecipeOptions {
                 type: "range",
                 step: 1,
                 min: 1,
-                max: NUM_THEME_IDENTITIES,
+                max: selectedIdentityIndexes.length,
                 value: savedRecipe?.minIdentities ?? 1,
             });
 
@@ -147,7 +152,7 @@ class RecipeOptions {
                 type: "range",
                 step: 1,
                 min: 1,
-                max: NUM_THEME_IDENTITIES,
+                max: selectedIdentityIndexes.length,
                 value: savedRecipe?.maxIdentities ?? NUM_THEME_IDENTITIES,
             });
 
@@ -377,7 +382,48 @@ class RecipeOptions {
         });
         RecipeOptions.saveRecipes();
     }
+
+    static onIdentityChoiceChange() {
+        RecipeOptions.idOrder.forEach(recipeId => {
+            RecipeOptions.byId[recipeId].inputs.minIdentitiesInput.max = `${selectedIdentityIndexes.length}`;
+            RecipeOptions.byId[recipeId].inputs.maxIdentitiesInput.max = `${selectedIdentityIndexes.length}`;
+        });
+        RecipeOptions.onUpdateAll();
+    }
 }
+
+
+export let identityChoiceButton: HTMLButtonElement = (() => {
+    let button: HTMLButtonElement = document.createElement("button");
+    button.className = mainPageStyles.button;
+    Object.assign(button.style, {
+        "font-size": "inherit",
+        "padding": "0 0.3em",
+        "border-width": "0.1em",
+        "margin": "0",
+        "display": "inline-flex",
+        "vertical-align": "top",
+    });
+    button.onclick = () => identityChoiceModal.open();
+    
+    let identityNumber: HTMLElement = document.createElement("span");
+    Object.assign(identityNumber.style, {"width": "0.9em", "margin-right": "0.2em"});
+    let identity: HTMLElement = document.createElement("div");
+    button.addEventListener("identityChoicesModalUpdate", () => {
+        identityNumber.innerText = `${selectedIdentityIndexes.length}`;
+        
+        identity.remove();
+        let theme: Theme = Themes[selectedThemeId];
+        const randomSelectedIdentity = theme.identityOrder[selectedIdentityIndexes[Math.floor(Math.random()*selectedIdentityIndexes.length)]];
+        identity = (theme.identityAssets[randomSelectedIdentity]?.cloneNode() ?? document.createElement("div")) as HTMLElement; // Unnecessary safety.
+        identity.style.width = "1.15em";
+        button.append(identity);
+    });
+
+    button.append(identityNumber);
+    button.dispatchEvent(new Event("identityChoicesModalUpdate"));
+    return button;
+})();
 
 
 let sizeInput: HTMLInputElement = (() => {
@@ -390,7 +436,7 @@ let sizeInput: HTMLInputElement = (() => {
         min: 1,
         max: MAX_SUPPORTED_SIZE,
     });
-    Object.assign(input.style, {"accent-color": "darkorange"});
+    Object.assign(input.style, {"accent-color": "darkorange", "margin-right": "max(0em, 85% - 240px)"});
 
     input.addEventListener("change", () => {
         localStorage.setItem(SIZE_CHOICE_STORAGE_KEY, input.value);
@@ -410,6 +456,7 @@ let sizeOption: HTMLElement = (() => {
     element.append(sizeNumber);
     element.append(sizeInput);
     element.append(rangeInputTickmarks(sizeInput));
+    element.append(identityChoiceButton);
     return element;
 })();
 
