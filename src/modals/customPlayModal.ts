@@ -71,6 +71,7 @@ export class RecipeOptions {
     static new(savedRecipe?: SavedRecipe) {
         if (RecipeOptions.idOrder.length >= 100) return; /* Limit to 100 recipes. 
         There is an insignificant memory leak when spamming instances, even with limiter. */
+        playButton.disabled = false; // Recipe(s) exist, so enable.
         return new RecipeOptions(savedRecipe);
     }
 
@@ -295,6 +296,7 @@ export class RecipeOptions {
                 delete RecipeOptions.byId[recipeId];
                 RecipeOptions.idOrder = RecipeOptions.idOrder.filter(x => x !== recipeId);
                 this.element.remove();
+                playButton.disabled = !(RecipeOptions.idOrder.length > 0); // Disable on no recipes.
                 RecipeOptions.saveRecipes();
             };
             return button;
@@ -528,6 +530,9 @@ let guessOption: HTMLElement = (() => {
 })();
 
 
+let playButton: HTMLButtonElement = document.createElement("button");
+playButton.disabled = true; // Must be defined and disabled prior to recipes init. Will be enabled if recipes exist.
+
 let recipes: HTMLElement = (() => {
     let element: HTMLElement = document.createElement("div");
     Object.assign(element.style, {
@@ -563,7 +568,52 @@ let recipes: HTMLElement = (() => {
 })();
 
 
-// submit button
+(() => { // Finish playButton init.
+    playButton.className = mainPageStyles.button;
+    playButton.innerText = "Play";
+
+    playButton.onclick = () => {
+        if (!RecipeOptions.idOrder.length) { return }
+    
+        const rawCreationParams: RawCreationParameters = {
+            guessSize: Number(sizeInput.value),
+            numRemainingGuesses: Number(guessInput.value),
+            endlessGuessMode: endlessInput.checked,
+            digitIdentities: selectedIdentityIndexes.sort((a,b)=>a-b)
+                .map(index => Themes[selectedThemeId].identityOrder[index]),
+            solutionRecipes: {
+                recipes: (() => {
+                    let recipes: {[recipeId: string]: RawRecipe} = {};
+                    Object.entries(RecipeOptions.byId).forEach(([recipeId, X]) => {
+                        recipes[recipeId] = {
+                            numDigits: Number(X.inputs.lengthInput.value),
+                            isFloating: X.inputs.floatingInput.checked,
+                            numIdentities: [
+                                Number(X.inputs.minIdentitiesInput.value),
+                                Number(X.inputs.maxIdentitiesInput.value)
+                            ],
+                        };
+                    });
+                    return recipes;
+                })(),
+                order: RecipeOptions.idOrder,
+            },
+        };
+        const validCreationParams: ValidCreationParameters = Game.validateCreationParameters(rawCreationParams).valid;
+        let game: Game = new Game(validCreationParams);
+        console.log("raw creation params", rawCreationParams);
+        console.log("valid creation params", validCreationParams);
+        console.log("game", game);
+    };
+})();
+let itemsButton: HTMLButtonElement = (() => {
+    let button: HTMLButtonElement = document.createElement("button");
+    button.className = mainPageStyles.button;
+    button.innerText = "Items";
+
+    button.onclick = () => itemsModal.open();
+    return button;
+})();
 let bottomButtons: HTMLElement = (() => {
     let element: HTMLElement = document.createElement("div");
     Object.assign(element.style, {"margin-top": "0.3em"});
@@ -575,63 +625,13 @@ let bottomButtons: HTMLElement = (() => {
         "margin": "0",
     };
     const edgeMargin: string = "clamp(0em, calc(100% - 14em), 3em)";
-
-    let playButton: HTMLButtonElement = (() => {
-        let button: HTMLButtonElement = document.createElement("button");
-        button.className = mainPageStyles.button;
-        Object.assign(button.style, butNotMainMenuStyle);
-        Object.assign(button.style, {"margin-left": edgeMargin});
-        button.innerText = "Play";
-
-        button.onclick = () => {
-            const rawCreationParams: RawCreationParameters = {
-                guessSize: Number(sizeInput.value),
-                numRemainingGuesses: Number(guessInput.value),
-                endlessGuessMode: endlessInput.checked,
-                digitIdentities: selectedIdentityIndexes.sort((a,b)=>a-b)
-                    .map(index => Themes[selectedThemeId].identityOrder[index]),
-                solutionRecipes: {
-                    recipes: (() => {
-                        let recipes: {[recipeId: string]: RawRecipe} = {};
-                        Object.entries(RecipeOptions.byId).forEach(([recipeId, X]) => {
-                            recipes[recipeId] = {
-                                numDigits: Number(X.inputs.lengthInput.value),
-                                isFloating: X.inputs.floatingInput.checked,
-                                numIdentities: [
-                                    Number(X.inputs.minIdentitiesInput.value),
-                                    Number(X.inputs.maxIdentitiesInput.value)
-                                ],
-                            };
-                        });
-                        return recipes;
-                    })(),
-                    order: RecipeOptions.idOrder,
-                },
-            };
-            const validCreationParams: ValidCreationParameters = Game.validateCreationParameters(rawCreationParams).valid;
-            let game: Game = new Game(validCreationParams);
-            console.log("raw creation params", rawCreationParams);
-            console.log("valid creation params", validCreationParams);
-            console.log("game", game);
-        };
-
-        return button;
-    })();
-
-    let itemsButton: HTMLButtonElement = (() => {
-        let button: HTMLButtonElement = document.createElement("button");
-        button.className = mainPageStyles.button;
-        Object.assign(button.style, butNotMainMenuStyle);
-        Object.assign(button.style, {"float": "right", "margin-right": edgeMargin});
-        button.innerText = "Items";
-
-        button.onclick = () => itemsModal.open();
-        return button;
-    })();
+    Object.assign(playButton.style, butNotMainMenuStyle);
+    Object.assign(playButton.style, {"margin-left": edgeMargin});
+    Object.assign(itemsButton.style, butNotMainMenuStyle);
+    Object.assign(itemsButton.style, {"float": "right", "margin-right": edgeMargin});
 
     element.append(playButton);
     element.append(itemsButton);
-
     return element;
 })();
 
