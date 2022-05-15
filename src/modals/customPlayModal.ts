@@ -1,3 +1,5 @@
+import Game, { RawRecipe, RawCreationParameters, ValidCreationParameters } from "../Game";
+
 import modalMenu from "../modalMenus";
 import styles from "./customPlayModal.module.css";
 import mainPageStyles from "../mainPage.module.css";
@@ -580,7 +582,39 @@ let bottomButtons: HTMLElement = (() => {
         Object.assign(button.style, butNotMainMenuStyle);
         Object.assign(button.style, {"margin-left": edgeMargin});
         button.innerText = "Play";
-        button.disabled = true;
+
+        button.onclick = () => {
+            const rawCreationParams: RawCreationParameters = {
+                guessSize: Number(sizeInput.value),
+                numRemainingGuesses: Number(guessInput.value),
+                endlessGuessMode: endlessInput.checked,
+                digitIdentities: selectedIdentityIndexes.sort((a,b)=>a-b)
+                    .map(index => Themes[selectedThemeId].identityOrder[index]),
+                solutionRecipes: {
+                    recipes: (() => {
+                        let recipes: {[recipeId: string]: RawRecipe} = {};
+                        Object.entries(RecipeOptions.byId).forEach(([recipeId, X]) => {
+                            recipes[recipeId] = {
+                                numDigits: Number(X.inputs.lengthInput.value),
+                                isFloating: X.inputs.floatingInput.checked,
+                                numIdentities: [
+                                    Number(X.inputs.minIdentitiesInput.value),
+                                    Number(X.inputs.maxIdentitiesInput.value)
+                                ],
+                            };
+                        });
+                        return recipes;
+                    })(),
+                    order: RecipeOptions.idOrder,
+                },
+            };
+            const validCreationParams: ValidCreationParameters = Game.validateCreationParameters(rawCreationParams).valid;
+            let game: Game = new Game(validCreationParams);
+            console.log("raw creation params", rawCreationParams);
+            console.log("valid creation params", validCreationParams);
+            console.log("game", game);
+        };
+
         return button;
     })();
 
